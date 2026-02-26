@@ -5,7 +5,7 @@
   padding: 16px 20px;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 20px;
 }
 
@@ -23,8 +23,7 @@
   font-weight: 600;
 }
 
-.input,
-.select {
+.input {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -34,8 +33,7 @@
   min-width: 140px;
 }
 
-.input:focus,
-.select:focus {
+.input:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
@@ -43,7 +41,9 @@
 .checkboxGroup {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+  min-height: 34px;
 }
 
 .checkboxLabel {
@@ -62,19 +62,47 @@
   height: 14px;
 }
 
+.dateRange {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.dateRange .group {
+  flex: 1;
+  min-width: 0;
+}
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 .resetBtn {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  height: 34px;
-  font-size: 13px;
-  transition: border-color 0.15s, color 0.15s;
   align-self: flex-end;
 }
 
-.resetBtn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+@media (max-width: 768px) {
+  .bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .group {
+    width: 100%;
+  }
+
+  .dateRange {
+    width: 100%;
+  }
+
+  .dateRange .group {
+    width: auto;
+  }
 }

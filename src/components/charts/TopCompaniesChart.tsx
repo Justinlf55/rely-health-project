@@ -4,7 +4,9 @@ import {
 } from 'recharts';
 import { useFilteredMissions } from '../../hooks/useFilteredMissions';
 import { getTopCompaniesByMissionCount } from '../../data/analytics';
+import { Card } from '../ui';
 import styles from './Chart.module.css';
+import { TOOLTIP_CONTENT_STYLE, TOOLTIP_CURSOR, AXIS_TICK_STYLE } from './chartConfig';
 
 const GRADIENT_COLORS = [
   '#58a6ff', '#4d9ef0', '#4396e0', '#388ed0', '#2d86c1',
@@ -12,14 +14,6 @@ const GRADIENT_COLORS = [
 ];
 
 const CHART_MARGIN = { top: 4, right: 16, left: 4, bottom: 4 };
-const TOOLTIP_CONTENT_STYLE = {
-  background: '#21262d',
-  border: '1px solid #30363d',
-  borderRadius: 6,
-  color: '#e6edf3',
-  fontSize: 12,
-};
-const TOOLTIP_CURSOR = { fill: 'rgba(88,166,255,0.08)' };
 
 const TopCompaniesChart = memo(() => {
   const missions = useFilteredMissions();
@@ -29,9 +23,16 @@ const TopCompaniesChart = memo(() => {
     [missions],
   );
 
+  const topCompany = data[0];
+
   return (
-    <div className={styles.card}>
+    <Card as="section" aria-label="Top companies chart" className={styles.card}>
       <h3 className={styles.title}>Top Companies</h3>
+      <p className="sr-only">
+        Horizontal bar chart showing top companies by mission count.
+        {topCompany ? ` Leading: ${topCompany.name} with ${topCompany.count} missions.` : ''}
+        {data.map((d) => `${d.name}: ${d.count}`).join(', ')}.
+      </p>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart
           layout="vertical"
@@ -41,14 +42,14 @@ const TopCompaniesChart = memo(() => {
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(48,54,61,0.8)" horizontal={false} />
           <XAxis
             type="number"
-            tick={{ fill: '#8b949e', fontSize: 11 }}
+            tick={AXIS_TICK_STYLE}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fill: '#8b949e', fontSize: 11 }}
+            tick={AXIS_TICK_STYLE}
             tickLine={false}
             width={100}
           />
@@ -63,7 +64,7 @@ const TopCompaniesChart = memo(() => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </Card>
   );
 });
 

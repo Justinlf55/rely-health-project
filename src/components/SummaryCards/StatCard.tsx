@@ -1,7 +1,8 @@
 import { memo } from 'react';
+import { Card } from '../ui';
 import styles from './SummaryCards.module.css';
 
-interface Props {
+interface StatCardProps {
   label: string;
   value: string;
   icon: string;
@@ -9,9 +10,9 @@ interface Props {
   small?: boolean;
 }
 
-const StatCard = memo(({ label, value, icon, accent, small }: Props) => (
-  <div className={styles.card}>
-    <span className={styles.icon}>{icon}</span>
+const StatCard = memo(({ label, value, icon, accent, small }: StatCardProps) => (
+  <Card as="article" className={styles.card} aria-label={`${label}: ${value}`}>
+    <span className={styles.icon} aria-hidden="true">{icon}</span>
     <div className={styles.content}>
       <span className={styles.label}>{label}</span>
       <span
@@ -20,7 +21,7 @@ const StatCard = memo(({ label, value, icon, accent, small }: Props) => (
         {value}
       </span>
     </div>
-  </div>
+  </Card>
 ));
 
 StatCard.displayName = 'StatCard';

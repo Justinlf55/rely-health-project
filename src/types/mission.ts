@@ -1,3 +1,7 @@
+import type { SortDirection } from '../constants';
+
+export { MissionStatus, SortDirection } from '../constants';
+
 export interface MissionRow {
   Company: string;
   Location: string;
@@ -21,5 +25,5 @@ export type SortKey = keyof MissionRow | '';
 
 export interface SortState {
   key: SortKey;
-  direction: 'asc' | 'desc';
+  direction: SortDirection;
 }

@@ -1,11 +1,16 @@
 import styles from './ErrorBanner.module.css';
 
-interface Props {
+interface ErrorBannerProps {
   message: string;
 }
 
-const ErrorBanner = ({ message }: Props) => (
-  <div className={styles.banner} role="alert">
+const ErrorBanner = ({ message }: ErrorBannerProps) => (
+  <div
+    className={styles.banner}
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
     <strong>Error:</strong> {message}
   </div>
 );

@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
 import type { ReactNode } from 'react';
 import type { MissionRow, FilterState, SortState } from '../types/mission';
+import { SortDirection } from '../constants';
 import { fetchMissions } from '../data/loader';
 
 interface DashboardState {
@@ -28,7 +29,7 @@ const initialFilterState: FilterState = {
 const initialState: DashboardState = {
   allMissions: [],
   filterState: initialFilterState,
-  sortState: { key: 'Date', direction: 'desc' },
+  sortState: { key: 'Date', direction: SortDirection.Desc },
   isLoading: true,
   error: null,
 };
@@ -61,12 +62,19 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    let cancelled = false;
     dispatch({ type: 'LOAD_START' });
     fetchMissions()
-      .then((data) => dispatch({ type: 'LOAD_SUCCESS', payload: data }))
-      .catch((err: unknown) =>
-        dispatch({ type: 'LOAD_ERROR', payload: err instanceof Error ? err.message : String(err) }),
-      );
+      .then((data) => {
+        if (!cancelled) dispatch({ type: 'LOAD_SUCCESS', payload: data });
+      })
+      .catch((err: unknown) => {
+        if (!cancelled)
+          dispatch({ type: 'LOAD_ERROR', payload: err instanceof Error ? err.message : 'Failed to load missions' });
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const setFilter = useCallback(

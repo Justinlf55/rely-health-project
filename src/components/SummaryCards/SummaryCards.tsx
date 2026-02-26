@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useDashboard } from '../../context/DashboardContext';
 import { useFilteredMissions } from '../../hooks/useFilteredMissions';
 import { getMissionStatusCount, getMostUsedRocket, getAverageMissionsPerYear } from '../../data/analytics';
 import { formatNumber, formatPercent } from '../../utils/formatters';
@@ -7,7 +6,6 @@ import StatCard from './StatCard';
 import styles from './SummaryCards.module.css';
 
 const SummaryCards = () => {
-  const { allMissions } = useDashboard();
   const filtered = useFilteredMissions();
 
   const stats = useMemo(() => {
@@ -16,7 +14,7 @@ const SummaryCards = () => {
     const successRate = total > 0 ? (statusCounts['Success'] / total) * 100 : 0;
     const topRocket = getMostUsedRocket(filtered);
     const activeRockets = new Set(
-      allMissions.filter((m) => m.RocketStatus === 'Active').map((m) => m.Rocket),
+      filtered.filter((m) => m.RocketStatus === 'Active').map((m) => m.Rocket),
     ).size;
 
     let avgPerYear = 0;
@@ -32,7 +30,7 @@ const SummaryCards = () => {
     }
 
     return { total, successRate, topRocket, activeRockets, avgPerYear };
-  }, [filtered, allMissions]);
+  }, [filtered]);
 
   return (
     <div className={styles.grid}>

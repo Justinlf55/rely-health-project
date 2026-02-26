@@ -1,9 +1,11 @@
 import { useCallback, useMemo } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import CompanyMultiSelect from './CompanyMultiSelect';
+import { Button } from '../ui';
+import { MissionStatus } from '../../constants';
 import styles from './FilterBar.module.css';
 
-const STATUS_OPTIONS = ['Success', 'Failure', 'Partial Failure', 'Prelaunch Failure'];
+const STATUS_OPTIONS = Object.values(MissionStatus);
 
 const FilterBar = () => {
   const { allMissions, filterState, setFilter } = useDashboard();
@@ -31,26 +33,28 @@ const FilterBar = () => {
 
   return (
     <div className={styles.bar}>
-      <div className={styles.group}>
-        <label className={styles.label} htmlFor="startDate">From</label>
-        <input
-          id="startDate"
-          type="date"
-          className={styles.input}
-          value={filterState.startDate}
-          onChange={(e) => setFilter({ startDate: e.target.value })}
-        />
-      </div>
+      <div className={styles.dateRange}>
+        <div className={styles.group}>
+          <label className={styles.label} htmlFor="startDate">From</label>
+          <input
+            id="startDate"
+            type="date"
+            className={styles.input}
+            value={filterState.startDate}
+            onChange={(e) => setFilter({ startDate: e.target.value })}
+          />
+        </div>
 
-      <div className={styles.group}>
-        <label className={styles.label} htmlFor="endDate">To</label>
-        <input
-          id="endDate"
-          type="date"
-          className={styles.input}
-          value={filterState.endDate}
-          onChange={(e) => setFilter({ endDate: e.target.value })}
-        />
+        <div className={styles.group}>
+          <label className={styles.label} htmlFor="endDate">To</label>
+          <input
+            id="endDate"
+            type="date"
+            className={styles.input}
+            value={filterState.endDate}
+            onChange={(e) => setFilter({ endDate: e.target.value })}
+          />
+        </div>
       </div>
 
       <div className={styles.group}>
@@ -62,8 +66,8 @@ const FilterBar = () => {
         />
       </div>
 
-      <div className={styles.group}>
-        <span className={styles.label}>Status</span>
+      <fieldset className={`${styles.group} ${styles.fieldset}`}>
+        <legend className={styles.label}>Status</legend>
         <div className={styles.checkboxGroup}>
           {STATUS_OPTIONS.map((status) => (
             <label key={status} className={styles.checkboxLabel}>
@@ -76,11 +80,11 @@ const FilterBar = () => {
             </label>
           ))}
         </div>
-      </div>
+      </fieldset>
 
-      <button className={styles.resetBtn} onClick={handleReset}>
+      <Button variant="secondary" size="md" className={styles.resetBtn} onClick={handleReset}>
         Reset Filters
-      </button>
+      </Button>
     </div>
   );
 };

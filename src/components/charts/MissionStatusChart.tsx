@@ -2,7 +2,9 @@ import { memo, useMemo } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useFilteredMissions } from '../../hooks/useFilteredMissions';
 import { getMissionStatusCount } from '../../data/analytics';
+import { Card } from '../ui';
 import styles from './Chart.module.css';
+import { TOOLTIP_CONTENT_STYLE, LEGEND_WRAPPER_STYLE } from './chartConfig';
 
 const COLORS: Record<string, string> = {
   'Success': '#3fb950',
@@ -10,16 +12,6 @@ const COLORS: Record<string, string> = {
   'Partial Failure': '#a371f7',
   'Prelaunch Failure': '#d29922',
 };
-
-const TOOLTIP_CONTENT_STYLE = {
-  background: '#21262d',
-  border: '1px solid #30363d',
-  borderRadius: 6,
-  color: '#e6edf3',
-  fontSize: 12,
-};
-
-const LEGEND_WRAPPER_STYLE = { fontSize: 12, color: '#8b949e' };
 
 const MissionStatusChart = memo(() => {
   const missions = useFilteredMissions();
@@ -35,8 +27,8 @@ const MissionStatusChart = memo(() => {
   }, [missions]);
 
   const renderCenterLabel = () => (
-    <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle">
-      <tspan x="50%" dy="-8" fontSize={22} fontWeight={700} fill="#e6edf3">
+    <text x="50%" y="45%" textAnchor="middle" dominantBaseline="middle">
+      <tspan x="50%" dy="-10" fontSize={22} fontWeight={700} fill="#e6edf3">
         {successRate}%
       </tspan>
       <tspan x="50%" dy={20} fontSize={11} fill="#8b949e">
@@ -46,8 +38,12 @@ const MissionStatusChart = memo(() => {
   );
 
   return (
-    <div className={styles.card}>
+    <Card as="section" aria-label="Mission status chart" className={styles.card}>
       <h3 className={styles.title}>Mission Status</h3>
+      <p className="sr-only">
+        Donut chart showing mission status breakdown. Success rate: {successRate}%.
+        {data.map((d) => `${d.name}: ${d.value}`).join(', ')}.
+      </p>
       <ResponsiveContainer width="100%" height={260}>
         <PieChart>
           <Pie
@@ -72,7 +68,7 @@ const MissionStatusChart = memo(() => {
           />
         </PieChart>
       </ResponsiveContainer>
-    </div>
+    </Card>
   );
 });
 

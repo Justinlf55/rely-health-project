@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import type { MissionRow } from '../types/mission';
+import { SortDirection } from '../constants';
 
 export const useFilteredMissions = (): MissionRow[] => {
   const { allMissions, filterState, sortState } = useDashboard();
@@ -27,7 +28,7 @@ export const useFilteredMissions = (): MissionRow[] => {
         const aVal = a[key] ?? '';
         const bVal = b[key] ?? '';
         const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-        return direction === 'asc' ? cmp : -cmp;
+        return direction === SortDirection.Asc ? cmp : -cmp;
       });
     }
 

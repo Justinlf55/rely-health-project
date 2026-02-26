@@ -3,23 +3,13 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { useFilteredMissions } from '../../hooks/useFilteredMissions';
+import { Card } from '../ui';
 import styles from './Chart.module.css';
+import { TOOLTIP_CONTENT_STYLE, TOOLTIP_CURSOR, AXIS_TICK_STYLE } from './chartConfig';
 
 const CHART_MARGIN = { top: 8, right: 8, left: 0, bottom: 0 };
-const TOOLTIP_CONTENT_STYLE = {
-  background: '#21262d',
-  border: '1px solid #30363d',
-  borderRadius: 6,
-  color: '#e6edf3',
-  fontSize: 12,
-};
-const TOOLTIP_CURSOR = { fill: 'rgba(88,166,255,0.08)' };
 
-interface Props {
-  expanded?: boolean;
-}
-
-const MissionsPerYearChart = memo(({ expanded = false }: Props) => {
+const MissionsPerYearChart = memo(() => {
   const missions = useFilteredMissions();
 
   const data = useMemo(() => {
@@ -33,20 +23,27 @@ const MissionsPerYearChart = memo(({ expanded = false }: Props) => {
       .map(([year, count]) => ({ year: String(year), count }));
   }, [missions]);
 
+  const totalMissions = data.reduce((s, d) => s + d.count, 0);
+  const peakYear = data.reduce((best, d) => d.count > best.count ? d : best, { year: '—', count: 0 });
+
   return (
-    <div className={styles.card}>
+    <Card as="section" aria-label="Missions per year chart" className={styles.card}>
       <h3 className={styles.title}>Missions Per Year</h3>
+      <p className="sr-only">
+        Bar chart showing missions per year. Total: {totalMissions} missions.
+        Peak year: {peakYear.year} with {peakYear.count} missions.
+      </p>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} margin={CHART_MARGIN}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(48,54,61,0.8)" />
           <XAxis
             dataKey="year"
-            tick={{ fill: '#8b949e', fontSize: 11 }}
+            tick={AXIS_TICK_STYLE}
             tickLine={false}
-            interval={expanded ? 2 : 9}
+            interval={9}
           />
           <YAxis
-            tick={{ fill: '#8b949e', fontSize: 11 }}
+            tick={AXIS_TICK_STYLE}
             tickLine={false}
             axisLine={false}
           />
@@ -59,11 +56,10 @@ const MissionsPerYearChart = memo(({ expanded = false }: Props) => {
             fill="#58a6ff"
             radius={[3, 3, 0, 0]}
             name="Missions"
-            maxBarSize={expanded ? 18 : undefined}
           />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </Card>
   );
 });
 
