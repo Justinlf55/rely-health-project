@@ -60,7 +60,7 @@ const MissionStatusChart = memo(() => {
             ))}
             {renderCenterLabel()}
           </Pie>
-          <Tooltip contentStyle={TOOLTIP_CONTENT_STYLE} />
+          <Tooltip contentStyle={TOOLTIP_CONTENT_STYLE} itemStyle={{ color: '#ffffff' }} />
           <Legend
             iconType="circle"
             iconSize={8}

@@ -56,6 +56,7 @@ const TopCompaniesChart = memo(() => {
           <Tooltip
             contentStyle={TOOLTIP_CONTENT_STYLE}
             cursor={TOOLTIP_CURSOR}
+            itemStyle={{ color: '#58a6ff' }}
           />
           <Bar dataKey="count" radius={[0, 3, 3, 0]} name="Missions">
             {data.map((_, i) => (
