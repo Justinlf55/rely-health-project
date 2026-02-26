@@ -6,13 +6,21 @@ An interactive analytics dashboard for exploring historical space launch data, b
 
 ## Screen Recordings
 
-> 📹 *Screen recording: Desktop full walkthrough — replace with GIF/video*
+### Desktop
 
-> 📹 *Screen recording: Tablet responsive layout — replace with GIF/video*
+<video src="media/desktop-demo.mov" controls width="100%"></video>
 
-> 📹 *Screen recording: Mobile responsive layout — replace with GIF/video*
+### Tablet
 
-> 📹 *Screen recording: Keyboard-only navigation demo (ADA) — replace with GIF/video*
+<video src="media/tablet-demo.mov" controls width="100%"></video>
+
+### Mobile
+
+<video src="media/mobile-demo.mov" controls width="100%"></video>
+
+### Keyboard / ADA Navigation
+
+<video src="media/ada-demo.mov" controls width="100%"></video>
 
 ---
 
