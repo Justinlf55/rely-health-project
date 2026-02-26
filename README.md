@@ -8,19 +8,19 @@ An interactive analytics dashboard for exploring historical space launch data, b
 
 ### Desktop
 
-<video src="media/desktop-demo.mov" controls width="100%"></video>
+<video src="media/desktop-demo.mp4" controls width="100%"></video>
 
 ### Tablet
 
-<video src="media/tablet-demo.mov" controls width="100%"></video>
+<video src="media/tablet-demo.mp4" controls width="100%"></video>
 
 ### Mobile
 
-<video src="media/mobile-demo.mov" controls width="100%"></video>
+<video src="media/mobile-demo.mp4" controls width="100%"></video>
 
 ### Keyboard / ADA Navigation
 
-<video src="media/ada-demo.mov" controls width="100%"></video>
+<video src="media/ada-demo.mp4" controls width="100%"></video>
 
 ---
 
